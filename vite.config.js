@@ -8,9 +8,8 @@ export default defineConfig({
     port: 3000, // Change this to your desired port
     proxy: {
     '/api': {  // Proxy all API requests
-        target: 'http://localhost:5000',  // Your backend URL
+        target: 'https://fms-backend-imgd.onrender.com',  // Your backend URL
         changeOrigin: true,
-        secure: false,
         rewrite: (path) => path.replace(/^\/api/, '')  // Remove "/api" prefix
     }
   }
