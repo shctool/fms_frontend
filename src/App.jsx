@@ -58,7 +58,7 @@ function App() {
 
         try {
             // Upload file to backend
-            const response = await axios.post('/api/upload', formData, {
+            const response = await axios.post('https://fms-backend-imgd.onrender.com/upload', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             
@@ -110,7 +110,7 @@ function App() {
             });
 
             // First fetch files from Google Drive with filters
-            const response = await axios.get(`/api/fetch-files?${params.toString()}`);
+            const response = await axios.get(`https://fms-backend-imgd.onrender.com/fetch-files?${params.toString()}`);
             
             // Then fetch corresponding data from Supabase for all files
             const { data: supabaseData, error } = await supabase
@@ -167,7 +167,7 @@ function App() {
 
     const handleViewFile = async (fileId) => {
         try {
-            const response = await axios.get(`/api/view-file/${fileId}`);
+            const response = await axios.get(`https://fms-backend-imgd.onrender.com/view-file/${fileId}`);
             
             // Create an anchor element
             const link = document.createElement('a');
@@ -187,7 +187,7 @@ function App() {
 
     const handleDownloadFile = async (fileId, fileName) => {
         try {
-            const response = await axios.get(`/api/download-file/${fileId}`, {
+            const response = await axios.get(`https://fms-backend-imgd.onrender.com/download-file/${fileId}`, {
                 responseType: 'blob'
             });
             const url = window.URL.createObjectURL(response.data);
@@ -491,12 +491,12 @@ function App() {
                                                 >
                                                     View
                                                 </button>
-                                                <button
+                                                {/* <button
                                                     onClick={() => handleDownloadFile(file.id, file.name)}
                                                     className="btn btn-success btn-sm btn-icon"
                                                 >
                                                     <Download size={16} />
-                                                </button>
+                                                </button> */}
                                             </td>
                                         </tr>
                                     ))}
