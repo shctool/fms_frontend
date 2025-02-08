@@ -27,9 +27,10 @@ function App() {
         { label: "AIIA", value: "12Ip6Gtds0sPrEPiuOhp9DxBam9H2K4Of" },
         { label: "AIIMS", value: "18A6Usa7_AuZRs23Zny3fn_uOAg1-Xmnq" },
         { label: "NIHFW", value: "1wsYdm93h0FqaRA2OCy9ipoLI20ey5EXT" },
+        { label: "ALIMCO", value: "1lyM84IqeNNNbJOgUSMwWq2j-eIbS-jMt" },
     ];
 
-    const types = ["Billing", "Estimate"];
+    const types = ["Billing", "Estimate", "General"];
     const locations = ["At Client Office", "At Office", "At NCCF"];
 
     const statusOptions = [
