@@ -1,90 +1,93 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Login.css';
+import './newlogin.css';
+import { supabase } from './supabase';
 
-function Login() {
-    const [isAdmin, setIsAdmin] = useState(true);
+const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
-
+  
     const handleLogin = async (e) => {
-        e.preventDefault();
-        // Add your login logic here
-        console.log('Login attempted with:', { username, password, isAdmin });
-        // On successful login:
-        // navigate('/dashboard');
-    };
+      e.preventDefault();
+      setError('');
+  
+      try {
+        const { data, error } = await supabase
+          .from('users')
+          .select('username, password, is_admin')
+          .eq('username', username)
+          .single();
+  
+        if (error) throw error;
+  
+        if (!data) {
+          setError('User not found');
+          return;
+        }
+  
+        if (data.password === password) {
+          localStorage.setItem('user', data.username);
 
-    const handleCreateUser = () => {
-        // Add your create user logic here
-        console.log('Create user clicked');
+          if (data.is_admin === true) {
+            navigate('/admin/hrm')
+          }
+          else {
+          navigate('/user');
+          }
+        } else {
+          setError('Invalid password');
+        }
+      } catch (err) {
+        setError('Login failed: ' + err.message);
+        console.error('Login error:', err);
+      }
     };
-
+  
     return (
-        <div className="login-container">
-            <div className="login-box">
-                <div className="login-header">
-                    <h1 className="portal-title">SHC Portal</h1>
-                    <h2>{isAdmin ? 'Admin Login' : 'User Login'}</h2>
-                    <div className="login-toggle">
-                        <button 
-                            className={`toggle-btn ${isAdmin ? 'active' : ''}`}
-                            onClick={() => setIsAdmin(true)}
-                        >
-                            Admin
-                        </button>
-                        <button 
-                            className={`toggle-btn ${!isAdmin ? 'active' : ''}`}
-                            onClick={() => setIsAdmin(false)}
-                        >
-                            User
-                        </button>
-                    </div>
-                </div>
-
-                <form onSubmit={handleLogin} className="login-form">
-                    <div className="form-group">
-                        <label htmlFor="username">Username</label>
-                        <input
-                            type="text"
-                            id="username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            placeholder="Enter your username"
-                            required
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Enter your password"
-                            required
-                        />
-                    </div>
-
-                    <button type="submit" className="login-btn">
-                        Login
-                    </button>
-
-                    {isAdmin && (
-                        <button 
-                            type="button" 
-                            className="create-user-btn"
-                            onClick={handleCreateUser}
-                        >
-                            Create New User
-                        </button>
-                    )}
-                </form>
+      <div className="flex">
+        <div className="login-form-container">
+          <h2 className="login-title">Login</h2>
+          
+          <form onSubmit={handleLogin} className="login-form">
+            {error && (
+              <div className="error-message">
+                {error}
+              </div>
+            )}
+  
+            <div className="form-group">
+              <label htmlFor="username">Username</label>
+              <input
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter your username"
+                required
+              />
             </div>
+  
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+  
+            <button type="submit" className="submit-button">
+              Sign In
+            </button>
+          </form>
         </div>
+      </div>
     );
-}
-
-export default Login;
+  };
+  
+  export default Login;

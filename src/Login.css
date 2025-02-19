@@ -123,6 +123,7 @@ html, body {
     margin-bottom: 1rem;
     font-weight: 600;
     text-align: center;
+
 }
 
 /* Add responsive breakpoints */
@@ -162,3 +163,122 @@ html, body {
         padding: 1.5rem;
     }
 }
+
+.flex {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .login-form-container {
+    width: 100%;
+    max-width: 420px;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+  }
+  
+  .login-form-container:hover {
+    transform: translateY(-2px);
+  }
+  
+  .login-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .error-message {
+    background-color: #fee2e2;
+    color: #dc2626;
+    padding: 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-group label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #4b5563;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+  }
+  
+  .form-group input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  .form-group input::placeholder {
+    color: #9ca3af;
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #2563eb;
+  }
+  
+  .submit-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+  }
+  
+  .submit-button:active {
+    transform: scale(0.98);
+  }
+  
+  /* Add smooth transitions for form elements */
+  .form-group input,
+  .submit-button {
+    will-change: transform, box-shadow;
+  }
+  
+  /* Add responsive adjustments */
+  @media (max-width: 480px) {
+    .login-form-container {
+      margin: 1rem;
+      padding: 1.5rem;
+    }
+    
+    .login-title {
+      font-size: 1.5rem;
+    }
+  }

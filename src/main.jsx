@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import './index.css'
 import App from './App.jsx'
 import Login from './login.jsx'
+import AdminLayout from './admin/adminapp.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -11,6 +12,7 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/*" element={<App />} />
+        <Route path="/admin/*" element={<AdminLayout />} />
       </Routes>
     </Router>
   </StrictMode>,
