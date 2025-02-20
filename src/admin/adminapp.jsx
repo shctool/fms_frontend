@@ -511,7 +511,7 @@ const EmployeeForm = ({ onClose, refreshEmployees, initialData = null }) => {
 
     const handleLogout = () => {
         // Clear any auth-related data from localStorage
-        localStorage.removeItem('username');
+        localStorage.removeItem('user');
         localStorage.removeItem('token');
         // Redirect to login page
         navigate('/login');
