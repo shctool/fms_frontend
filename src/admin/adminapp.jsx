@@ -327,6 +327,7 @@ const EmployeeForm = ({ onClose, refreshEmployees, initialData = null }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [exporting, setExporting] = useState(false);
+    
   
     const fetchEmployees = async () => {
       try {
@@ -508,6 +509,7 @@ const EmployeeForm = ({ onClose, refreshEmployees, initialData = null }) => {
   const AdminLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const [isAdmin, setIsAdmin] = useState(null); // state to store admin status
 
     const handleLogout = () => {
         // Clear any auth-related data from localStorage
@@ -516,6 +518,44 @@ const EmployeeForm = ({ onClose, refreshEmployees, initialData = null }) => {
         // Redirect to login page
         navigate('/login');
       };
+
+      useEffect(() => {
+        const checkAdminStatus = async () => {
+          const username = localStorage.getItem('user');
+          if (!username) {
+            // If user key doesn't exist in localStorage, redirect to login
+            navigate('/');
+            return;
+          }
+    
+          try {
+            // Query the users table to find the user and check if is_admin is true
+            const { data, error } = await supabase
+              .from('users')
+              .select('is_admin')
+              .eq('username', username)
+              .single(); // Assuming username is unique
+    
+            if (error || !data) {
+              navigate('/');
+            } else {
+              setIsAdmin(data.is_admin);
+              if (!data.is_admin) {
+                navigate('/');
+              }
+            }
+          } catch (err) {
+            navigate('/');
+          }
+        };
+    
+        checkAdminStatus();
+      }, [navigate]);
+    
+      if (isAdmin === null) {
+        // Show nothing while checking for admin status
+        return <div>Loading...</div>;
+      }
     return (
     
     <div className="app">
