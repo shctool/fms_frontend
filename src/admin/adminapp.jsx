@@ -3,6 +3,7 @@ import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom'
 import './adminStyles.css';
 import { supabase } from '../supabase';
 import FileManager from './fileManager';
+import * as XLSX from 'xlsx';
 
 
 const UserProfile = () => {
@@ -325,6 +326,7 @@ const EmployeeForm = ({ onClose, refreshEmployees, initialData = null }) => {
     const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [exporting, setExporting] = useState(false);
   
     const fetchEmployees = async () => {
       try {
@@ -373,6 +375,41 @@ const EmployeeForm = ({ onClose, refreshEmployees, initialData = null }) => {
       );
       setModalOpen(true);
     };
+
+    const handleExport = () => {
+      setExporting(true);
+      try {
+        // Prepare data for export
+        const exportData = filteredEmployees.map(employee => ({
+          'First Name': employee.first_name,
+          'Last Name': employee.last_name,
+          'Designation': employee.designation,
+          'Department': employee.department,
+          'Location': employee.location,
+          'Salary': employee.salary,
+          'Date of Birth': new Date(employee.date_of_birth).toLocaleDateString(),
+          'Joining Date': new Date(employee.joining_date).toLocaleDateString(),
+          'Status': employee.is_active ? 'Active' : 'Inactive'
+        }));
+  
+        // Create worksheet
+        const ws = XLSX.utils.json_to_sheet(exportData);
+  
+        // Create workbook
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Employees');
+  
+        // Generate file name with current date
+        const fileName = `employees_${new Date().toISOString().split('T')[0]}.xlsx`;
+  
+        // Save file
+        XLSX.writeFile(wb, fileName);
+      } catch (err) {
+        setError('Failed to export data. Please try again.');
+      } finally {
+        setExporting(false);
+      }
+    };
   
     const filteredEmployees = employees.filter(employee => 
       employee.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -392,6 +429,11 @@ const EmployeeForm = ({ onClose, refreshEmployees, initialData = null }) => {
               onChange={(e) => setSearchTerm(e.target.value)}
               className="search-input"
             />
+          </div>
+          <div className="header-buttons">
+            <button className='btn-secondary' onClick={handleExport} disabled={exporting || loading || filteredEmployees.length === 0}>
+              {exporting ? 'Exporting...' : 'Export as XLSX'}
+            </button>
           </div>
           <button className="btn-primary" onClick={handleCreateEmployee}>
             Create Employee
@@ -451,7 +493,6 @@ const EmployeeForm = ({ onClose, refreshEmployees, initialData = null }) => {
       </div>
     );
   };
-
 
   // FMS Component
 //   const FileManager = () => {

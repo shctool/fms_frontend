@@ -539,3 +539,53 @@ body {
     margin-top: 16px;
   }
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-secondary {
+  background-color: rgb(106, 220, 7);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--secondary-color);
+  border-color: #ccc;
+}
+
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .header-buttons {
+    width: 100%;
+  }
+
+  .header-buttons button {
+    flex: 1;
+  }
+}
