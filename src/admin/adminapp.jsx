@@ -36,6 +36,7 @@ const EmployeeForm = ({ onClose, refreshEmployees, initialData = null }) => {
       last_name: '',
       salary: '',
       joining_date: '',
+      date_of_birth: '',
       location: '',
       is_active: true,
       department: '',
@@ -98,106 +99,128 @@ const EmployeeForm = ({ onClose, refreshEmployees, initialData = null }) => {
   
         {error && <div className="error-message">{error}</div>}
   
-        <div className="form-row">
-          <div className="form-group">
-            <label>First Name</label>
-            <input
-              type="text"
-              name="first_name"
-              placeholder="Enter first name"
-              value={formData.first_name}
-              onChange={handleChange}
-              required
-            />
-          </div>
-  
-          <div className="form-group">
-            <label>Last Name</label>
-            <input
-              type="text"
-              name="last_name"
-              placeholder="Enter last name"
-              value={formData.last_name}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </div>
-  
-        <div className="form-row">
-          <div className="form-group">
-            <label>Salary</label>
-            <input
-              type="number"
-              name="salary"
-              placeholder="Enter salary"
-              value={formData.salary}
-              onChange={handleChange}
-              required
-            />
-          </div>
-  
-          <div className="form-group">
-            <label>Joining Date</label>
-            <input
-              type="date"
-              name="joining_date"
-              value={formData.joining_date}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </div>
-  
-        <div className="form-row">
-          <div className="form-group">
-            <label>Location</label>
-            <input
-              type="text"
-              name="location"
-              placeholder="Enter location"
-              value={formData.location}
-              onChange={handleChange}
-              required
-            />
-          </div>
-  
-          <div className="form-group">
-            <label>Department</label>
-            <input
-              type="text"
-              name="department"
-              placeholder="Enter department"
-              value={formData.department}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </div>
-  
-        <div className="form-row">
-          <div className="form-group">
-            <label>Designation</label>
-            <input
-              type="text"
-              name="designation"
-              placeholder="Enter designation"
-              value={formData.designation}
-              onChange={handleChange}
-              required
-            />
-          </div>
-  
-          <div className="form-group checkbox-group">
-            <label>
+        {/* Personal Information Section */}
+        <div className="form-section">
+          <h3>Personal Information</h3>
+          <div className="form-row">
+            <div className="form-group">
+              <label>First Name</label>
               <input
-                type="checkbox"
-                name="is_active"
-                checked={formData.is_active}
+                type="text"
+                name="first_name"
+                placeholder="Enter first name"
+                value={formData.first_name}
                 onChange={handleChange}
+                required
               />
-              Active Employee
-            </label>
+            </div>
+  
+            <div className="form-group">
+              <label>Last Name</label>
+              <input
+                type="text"
+                name="last_name"
+                placeholder="Enter last name"
+                value={formData.last_name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+  
+          <div className="form-row">
+            <div className="form-group">
+              <label>Date of Birth</label>
+              <input
+                type="date"
+                name="date_of_birth"
+                value={formData.date_of_birth}
+                onChange={handleChange}
+                required
+                max={new Date().toISOString().split('T')[0]}
+              />
+            </div>
+  
+            <div className="form-group">
+              <label>Location</label>
+              <input
+                type="text"
+                name="location"
+                placeholder="Enter location"
+                value={formData.location}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+        </div>
+  
+        {/* Employment Details Section */}
+        <div className="form-section">
+          <h3>Employment Details</h3>
+          <div className="form-row">
+            <div className="form-group">
+              <label>Department</label>
+              <input
+                type="text"
+                name="department"
+                placeholder="Enter department"
+                value={formData.department}
+                onChange={handleChange}
+                required
+              />
+            </div>
+  
+            <div className="form-group">
+              <label>Designation</label>
+              <input
+                type="text"
+                name="designation"
+                placeholder="Enter designation"
+                value={formData.designation}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+  
+          <div className="form-row">
+            <div className="form-group">
+              <label>Joining Date</label>
+              <input
+                type="date"
+                name="joining_date"
+                value={formData.joining_date}
+                onChange={handleChange}
+                required
+              />
+            </div>
+  
+            <div className="form-group">
+              <label>Salary</label>
+              <input
+                type="number"
+                name="salary"
+                placeholder="Enter salary"
+                value={formData.salary}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+  
+          <div className="form-row">
+            <div className="form-group checkbox-group">
+              <label>
+                <input
+                  type="checkbox"
+                  name="is_active"
+                  checked={formData.is_active}
+                  onChange={handleChange}
+                />
+                <span>Active Employee</span>
+              </label>
+            </div>
           </div>
         </div>
   
